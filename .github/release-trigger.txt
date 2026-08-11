@@ -1,0 +1,3 @@
+ARMD cross-platform release trigger
+Requested: 2026-08-12
+Targets: Windows x64 Inno Setup; Linux x64 AppImage and DEB
