@@ -1,0 +1,464 @@
+/*
+ * GitHub Markdown light fidelity layer.
+ * Values mirror the current GitHub Markdown/Primer light rendering for the
+ * elements supported by Inkwell. Loaded after the application theme CSS.
+ */
+
+:root {
+  --gh-canvas-default: #ffffff;
+  --gh-canvas-subtle: #f6f8fa;
+  --gh-fg-default: #1f2328;
+  --gh-fg-muted: #59636e;
+  --gh-fg-subtle: #818b98;
+  --gh-accent-fg: #0969da;
+  --gh-border-default: #d1d9e0;
+  --gh-border-muted: #d1d9e0b3;
+  --gh-neutral-muted: #818b981f;
+  --gh-success-fg: #1a7f37;
+  --gh-attention-fg: #9a6700;
+  --gh-severe-fg: #8250df;
+  --gh-danger-fg: #d1242f;
+}
+
+html[data-render-theme="github"],
+html[data-render-theme="github"] body,
+.app-shell-github {
+  background-color: var(--gh-canvas-default) !important;
+  color: var(--gh-fg-default);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* GitHub's Markdown container is 980px wide with 45px desktop padding. */
+.app-shell-github .editor-main {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 980px !important;
+  padding-right: 45px !important;
+  padding-left: 45px !important;
+}
+
+.app-shell-github .gh-prose.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  min-height: calc(100vh - 190px);
+  margin: 0;
+  padding: 24px 0 88px;
+  border: 0;
+  border-radius: 0;
+  background-color: var(--gh-canvas-default);
+  color: var(--gh-fg-default);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  -webkit-text-size-adjust: 100%;
+}
+
+.gh-prose.markdown-body::before {
+  display: table;
+  content: "";
+}
+
+.gh-prose.markdown-body::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.gh-prose.markdown-body > :first-child {
+  margin-top: 0 !important;
+}
+
+.gh-prose.markdown-body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+.gh-prose.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.gh-prose.markdown-body p,
+.gh-prose.markdown-body blockquote,
+.gh-prose.markdown-body ul,
+.gh-prose.markdown-body ol,
+.gh-prose.markdown-body dl,
+.gh-prose.markdown-body table,
+.gh-prose.markdown-body pre,
+.gh-prose.markdown-body details,
+.gh-prose.markdown-body .code-block-shell {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.gh-prose.markdown-body h1,
+.gh-prose.markdown-body h2,
+.gh-prose.markdown-body h3,
+.gh-prose.markdown-body h4,
+.gh-prose.markdown-body h5,
+.gh-prose.markdown-body h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--gh-fg-default);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.gh-prose.markdown-body h1 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--gh-border-muted);
+  font-size: 2em;
+}
+
+.gh-prose.markdown-body h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--gh-border-muted);
+  font-size: 1.5em;
+}
+
+.gh-prose.markdown-body h3 { font-size: 1.25em; }
+.gh-prose.markdown-body h4 { font-size: 1em; }
+.gh-prose.markdown-body h5 { font-size: 0.875em; }
+.gh-prose.markdown-body h6 { color: var(--gh-fg-muted); font-size: 0.85em; }
+
+.gh-prose.markdown-body strong,
+.gh-prose.markdown-body b {
+  color: inherit;
+  font-weight: 600;
+}
+
+.gh-prose.markdown-body a {
+  color: var(--gh-accent-fg);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.gh-prose.markdown-body a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.gh-prose.markdown-body blockquote {
+  margin-left: 0;
+  padding: 0 1em;
+  border-left: 0.25em solid var(--gh-border-default);
+  color: var(--gh-fg-muted);
+}
+
+.gh-prose.markdown-body blockquote > :first-child { margin-top: 0; }
+.gh-prose.markdown-body blockquote > :last-child { margin-bottom: 0; }
+
+.gh-prose.markdown-body ul,
+.gh-prose.markdown-body ol {
+  padding-left: 2em;
+}
+
+.gh-prose.markdown-body ul { list-style-type: disc; }
+.gh-prose.markdown-body ol { list-style-type: decimal; }
+.gh-prose.markdown-body li + li { margin-top: 0.25em; }
+.gh-prose.markdown-body li > p { margin-top: 1rem; }
+
+.gh-prose.markdown-body code,
+.gh-prose.markdown-body tt,
+.gh-prose.markdown-body pre,
+.gh-prose.markdown-body samp {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+}
+
+.gh-prose.markdown-body code,
+.gh-prose.markdown-body tt {
+  margin: 0;
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+  background-color: var(--gh-neutral-muted);
+  font-size: 85%;
+  white-space: break-spaces;
+}
+
+/* Code block node view mirrors GitHub's highlight + zeroclipboard structure. */
+.gh-prose.markdown-body .code-block-shell {
+  position: relative;
+  min-height: 52px;
+}
+
+.gh-prose.markdown-body .code-block-shell pre {
+  min-height: 52px;
+  margin: 0;
+  padding: 1rem;
+  overflow: auto;
+  border-radius: 6px;
+  background-color: var(--gh-canvas-subtle);
+  color: var(--gh-fg-default);
+  font-size: 85%;
+  line-height: 1.45;
+  word-wrap: normal;
+}
+
+.gh-prose.markdown-body .code-block-shell pre code {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background-color: transparent;
+  color: inherit;
+  font-size: 100%;
+  line-height: inherit;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.code-copy-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+  display: inline-grid;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--gh-border-default);
+  border-radius: 6px;
+  background-color: var(--gh-canvas-default);
+  color: var(--gh-fg-muted);
+  box-shadow: 0 1px 0 rgba(31, 35, 40, 0.04);
+  cursor: pointer;
+  opacity: 0;
+  transition: background-color 80ms ease, color 80ms ease, opacity 80ms ease;
+}
+
+.code-block-shell:hover .code-copy-button,
+.code-copy-button:focus-visible,
+.code-copy-button.is-copied {
+  opacity: 1;
+}
+
+.code-copy-button:hover {
+  background-color: var(--gh-canvas-subtle);
+  color: var(--gh-fg-default);
+}
+
+.code-copy-button:focus-visible {
+  outline: 2px solid var(--gh-accent-fg);
+  outline-offset: -1px;
+}
+
+.code-copy-button.is-copied {
+  color: var(--gh-success-fg);
+}
+
+.code-copy-button svg {
+  fill: currentColor;
+}
+
+.ink-prose .code-block-shell {
+  position: relative;
+  margin-top: 1.1em;
+}
+
+.ink-prose .code-block-shell pre {
+  margin: 0;
+}
+
+.ink-prose .code-copy-button {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-paper);
+}
+
+.gh-prose.markdown-body hr {
+  height: 0.25em;
+  margin: 1.5rem 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background-color: var(--gh-border-default);
+}
+
+.gh-prose.markdown-body table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+  font-variant: tabular-nums;
+}
+
+.gh-prose.markdown-body table tr {
+  border-top: 1px solid var(--gh-border-muted);
+  background-color: var(--gh-canvas-default);
+}
+
+.gh-prose.markdown-body table tr:nth-child(2n) {
+  background-color: var(--gh-canvas-subtle);
+}
+
+.gh-prose.markdown-body table th,
+.gh-prose.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid var(--gh-border-default);
+}
+
+.gh-prose.markdown-body table th {
+  background-color: inherit;
+  font-weight: 600;
+}
+
+.gh-prose.markdown-body table p { margin: 0; }
+
+.gh-prose.markdown-body ul[data-type="taskList"] {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.gh-prose.markdown-body ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4em;
+}
+
+.gh-prose.markdown-body ul[data-type="taskList"] li > label {
+  margin-top: 0.22em;
+}
+
+.gh-prose.markdown-body ul[data-type="taskList"] input[type="checkbox"] {
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  appearance: auto;
+}
+
+/* Current GitHub Markdown alert structure, colors, spacing, and Octicons. */
+.gh-prose.markdown-body blockquote.github-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 0.25em solid var(--gh-border-default);
+  color: inherit;
+  font-style: normal;
+}
+
+.gh-prose.markdown-body .github-alert > p:first-child {
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 8px !important;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  font-size: 0;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.gh-prose.markdown-body .github-alert > p:first-child::before {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  background-color: currentColor;
+  content: "";
+  -webkit-mask-image: var(--gh-alert-icon);
+  mask-image: var(--gh-alert-icon);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 16px 16px;
+  mask-size: 16px 16px;
+}
+
+.gh-prose.markdown-body .github-alert > p:first-child::after {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.github-alert-note {
+  --gh-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z'/%3E%3C/svg%3E");
+  border-left-color: var(--gh-accent-fg) !important;
+}
+.github-alert-note > p:first-child { color: var(--gh-accent-fg) !important; }
+.github-alert-note > p:first-child::after { content: "Note"; }
+
+.github-alert-tip {
+  --gh-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z'/%3E%3C/svg%3E");
+  border-left-color: var(--gh-success-fg) !important;
+}
+.github-alert-tip > p:first-child { color: var(--gh-success-fg) !important; }
+.github-alert-tip > p:first-child::after { content: "Tip"; }
+
+.github-alert-important {
+  --gh-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z'/%3E%3C/svg%3E");
+  border-left-color: var(--gh-severe-fg) !important;
+}
+.github-alert-important > p:first-child { color: var(--gh-severe-fg) !important; }
+.github-alert-important > p:first-child::after { content: "Important"; }
+
+.github-alert-warning {
+  --gh-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z'/%3E%3C/svg%3E");
+  border-left-color: var(--gh-attention-fg) !important;
+}
+.github-alert-warning > p:first-child { color: var(--gh-attention-fg) !important; }
+.github-alert-warning > p:first-child::after { content: "Warning"; }
+
+.github-alert-caution {
+  --gh-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z'/%3E%3C/svg%3E");
+  border-left-color: var(--gh-danger-fg) !important;
+}
+.github-alert-caution > p:first-child { color: var(--gh-danger-fg) !important; }
+.github-alert-caution > p:first-child::after { content: "Caution"; }
+
+/* Lowlight token mapping to GitHub's current light syntax palette. */
+.gh-prose .hljs-comment,
+.gh-prose .hljs-quote { color: #59636e; font-style: normal; }
+.gh-prose .hljs-keyword,
+.gh-prose .hljs-selector-tag,
+.gh-prose .hljs-subst { color: #cf222e; }
+.gh-prose .hljs-number,
+.gh-prose .hljs-literal,
+.gh-prose .hljs-variable,
+.gh-prose .hljs-template-variable,
+.gh-prose .hljs-tag .hljs-attr { color: #0550ae; }
+.gh-prose .hljs-string,
+.gh-prose .hljs-doctag,
+.gh-prose .hljs-regexp,
+.gh-prose .hljs-link { color: #0a3069; }
+.gh-prose .hljs-title,
+.gh-prose .hljs-section,
+.gh-prose .hljs-selector-id { color: #6639ba; }
+.gh-prose .hljs-type,
+.gh-prose .hljs-class .hljs-title,
+.gh-prose .hljs-built_in,
+.gh-prose .hljs-builtin-name,
+.gh-prose .hljs-symbol,
+.gh-prose .hljs-bullet,
+.gh-prose .hljs-meta { color: #953800; }
+.gh-prose .hljs-tag,
+.gh-prose .hljs-name,
+.gh-prose .hljs-attribute { color: #0550ae; }
+.gh-prose .hljs-deletion { color: #82071e; background-color: #ffebe9; }
+.gh-prose .hljs-addition { color: #116329; background-color: #dafbe1; }
+.gh-prose .hljs-emphasis { font-style: italic; }
+.gh-prose .hljs-strong { font-weight: 600; }
+
+@media (max-width: 767px) {
+  .app-shell-github .editor-main {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+  }
+
+  .app-shell-github .gh-prose.markdown-body {
+    padding-top: 15px;
+  }
+
+  .code-copy-button {
+    opacity: 1;
+  }
+}

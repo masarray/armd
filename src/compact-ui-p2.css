@@ -1,0 +1,120 @@
+/* P2: reduce editor chrome height without changing document rendering fidelity. */
+:root {
+  --inkwell-formatbar-height: 34px;
+  --inkwell-statusbar-height: 24px;
+}
+
+.format-toolbar-compact {
+  min-height: var(--inkwell-formatbar-height) !important;
+  height: var(--inkwell-formatbar-height);
+  gap: 1px;
+}
+
+.format-toolbar-compact.format-toolbar-writer {
+  margin: 0 0 12px;
+  padding: 2px 4px;
+}
+
+.format-toolbar-compact.format-toolbar-github {
+  margin: 0 -8px;
+  padding: 2px 6px;
+  background: #ffffff;
+  backdrop-filter: none;
+}
+
+.format-toolbar-compact .format-button {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  border-radius: 4px;
+}
+
+.format-toolbar-compact .format-button svg {
+  width: 13px;
+  height: 13px;
+}
+
+.format-toolbar-compact .format-separator {
+  height: 16px;
+  margin: 0 3px;
+}
+
+.format-toolbar-compact .format-select {
+  height: 26px;
+  min-height: 26px;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 11px;
+  line-height: 24px;
+}
+
+.format-toolbar-compact .format-block-select {
+  width: 52px;
+  padding-right: 18px;
+  padding-left: 7px;
+}
+
+.format-toolbar-compact .format-alert-select {
+  width: 57px;
+  padding-right: 18px;
+  padding-left: 6px;
+}
+
+.format-toolbar-compact .format-spacer {
+  min-width: 4px;
+  flex-basis: 4px;
+}
+
+/* Keep content close to the formatter while preserving GitHub Markdown's own
+ * internal 45px document padding. Focus mode has no titlebar and is excluded. */
+.app-shell-github:has(.app-titlebar) .editor-main,
+.app-shell-writer:has(.app-titlebar) .editor-main {
+  padding-top: 0 !important;
+}
+
+/* The old page reserve was sized for a much taller footer. */
+.app-shell:has(.editor-footer) .editor-main {
+  padding-bottom: 44px !important;
+}
+
+/* Smaller fixed status line. */
+.editor-footer {
+  min-height: var(--inkwell-statusbar-height);
+}
+
+.editor-footer-inner {
+  min-height: var(--inkwell-statusbar-height);
+  padding: 3px 14px !important;
+  font-size: 10px !important;
+  line-height: 1;
+  letter-spacing: 0.08em !important;
+}
+
+.editor-footer-writer {
+  background: color-mix(in oklab, var(--color-paper) 94%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.editor-footer-github {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: none;
+}
+
+.editor-footer-mode,
+.editor-footer-stats {
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .format-toolbar-compact.format-toolbar-github {
+    margin-right: -4px;
+    margin-left: -4px;
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+
+  .editor-footer-inner {
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+  }
+}

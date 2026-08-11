@@ -1,0 +1,191 @@
+/* Print/PDF output contains only the rendered document. */
+@page {
+  size: A4 portrait;
+  /* Near-edge PDF layout while retaining a practical safety margin. */
+  margin: 7mm 7mm 8mm;
+}
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body,
+  .app-shell,
+  .app-shell-writer,
+  .app-shell-github {
+    width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #1f2328 !important;
+  }
+
+  .app-titlebar,
+  .format-toolbar,
+  .bubble-toolbar,
+  .editor-footer,
+  .focus-exit,
+  .code-copy-button,
+  .github-heading-anchor,
+  .ProseMirror-selectednode::after,
+  .resize-cursor,
+  .column-resize-handle {
+    display: none !important;
+  }
+
+  .editor-main {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .wysiwyg-workspace,
+  .wysiwyg-workspace-writer,
+  .wysiwyg-workspace-github,
+  .tiptap,
+  .ProseMirror,
+  .ink-prose,
+  .gh-prose,
+  .markdown-body {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  .markdown-body,
+  .gh-prose {
+    color: #1f2328 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial,
+      sans-serif, "Apple Color Emoji", "Segoe UI Emoji" !important;
+    font-size: 10.5pt !important;
+    line-height: 1.46 !important;
+  }
+
+  .ink-prose {
+    color: #1f2328 !important;
+  }
+
+  /* Use the printable area from the first line instead of preserving screen spacing. */
+  .ProseMirror > :first-child,
+  .markdown-body > :first-child,
+  .ink-prose > :first-child,
+  .gh-prose > :first-child {
+    margin-top: 0 !important;
+  }
+
+  .ProseMirror > :last-child,
+  .markdown-body > :last-child,
+  .ink-prose > :last-child,
+  .gh-prose > :last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Keep headings with the content they introduce, without moving whole sections. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    break-after: avoid-page;
+    break-inside: avoid-page;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Small semantic units stay intact. Long containers may flow to the next page. */
+  figure,
+  img,
+  hr,
+  tr,
+  .github-alert-decoration-title {
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+  }
+
+  table,
+  tbody,
+  blockquote,
+  pre,
+  .code-block-shell,
+  .github-alert {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+
+  table {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th,
+  td {
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+
+  img {
+    display: block;
+    max-width: 100% !important;
+    max-height: 274mm !important;
+    object-fit: contain !important;
+  }
+
+  a,
+  a:visited {
+    color: #0969da !important;
+    text-decoration: underline !important;
+  }
+
+  pre,
+  .code-block-shell,
+  .highlight {
+    max-width: 100% !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  blockquote,
+  .github-alert {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+}
+
+/* Keep the same clean state while Electron prepares the print render. */
+html.inkwell-printing {
+  scrollbar-gutter: auto;
+}

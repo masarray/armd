@@ -1,0 +1,67 @@
+/* Decorations are always present in the ProseMirror document so switching themes
+ * never recreates editor state. Keep their non-GitHub presentation intentional. */
+
+.app-shell-writer .github-heading-anchor {
+  display: none;
+}
+
+.app-shell-writer .github-alert > p:first-child::before,
+.app-shell-writer .github-alert > p:first-child::after {
+  display: none !important;
+  content: none !important;
+}
+
+.app-shell-writer .github-alert-marker-paragraph {
+  margin: 0 !important;
+  color: var(--color-ink) !important;
+  font-size: inherit !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: inherit !important;
+}
+
+.app-shell-writer .github-alert-marker-hidden {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+}
+
+.app-shell-writer .github-alert-decoration-title {
+  display: flex;
+  margin: 0 0 0.6rem;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.app-shell-writer .github-alert-decoration-title::before {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  background-color: currentColor;
+  content: "";
+  -webkit-mask-image: var(--gh-alert-icon);
+  mask-image: var(--gh-alert-icon);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 14px 14px;
+  mask-size: 14px 14px;
+}
+
+.app-shell-writer .markdown-alert-note .github-alert-decoration-title { color: #0969da; }
+.app-shell-writer .markdown-alert-tip .github-alert-decoration-title { color: #1a7f37; }
+.app-shell-writer .markdown-alert-important .github-alert-decoration-title { color: #8250df; }
+.app-shell-writer .markdown-alert-warning .github-alert-decoration-title { color: #9a6700; }
+.app-shell-writer .markdown-alert-caution .github-alert-decoration-title { color: #d1242f; }

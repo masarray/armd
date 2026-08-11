@@ -1,0 +1,152 @@
+{
+  "name": "inkwell-markdown",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A lightweight offline-first WYSIWYG Markdown editor with GitHub-style preview.",
+  "author": "masarray",
+  "license": "MIT",
+  "main": "electron/main.mjs",
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "check": "npm run typecheck && npm run lint && npm run check:desktop",
+    "format": "prettier --write .",
+    "clean": "node scripts/clean.mjs",
+    "desktop:dev": "electron electron/main.mjs",
+    "desktop:pack": "npm run build && electron-builder --win dir --x64 --publish never",
+    "desktop:installer": "npm run build && electron-builder --win nsis --x64 --publish never",
+    "desktop:portable": "npm run build && electron-builder --win portable --x64 --publish never",
+    "desktop:dist": "npm run build && electron-builder --win nsis portable --x64 --publish never",
+    "desktop:release": "npm run build && electron-builder --win nsis portable --x64 --publish always",
+    "check:desktop": "node --check electron/main.mjs && node --check electron/preload.cjs"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "1.8.0",
+    "@tiptap/core": "3.27.3",
+    "@tiptap/extension-bubble-menu": "3.27.3",
+    "@tiptap/extension-code-block-lowlight": "3.27.3",
+    "@tiptap/extension-image": "3.27.3",
+    "@tiptap/extension-link": "3.27.3",
+    "@tiptap/extension-placeholder": "3.27.3",
+    "@tiptap/extension-table": "3.27.3",
+    "@tiptap/extension-task-item": "3.27.3",
+    "@tiptap/extension-task-list": "3.27.3",
+    "@tiptap/extension-typography": "3.27.3",
+    "@tiptap/pm": "3.27.3",
+    "@tiptap/react": "3.27.3",
+    "@tiptap/starter-kit": "3.27.3",
+    "lowlight": "3.3.0",
+    "lucide-react": "0.575.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tiptap-markdown": "0.9.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.32.0",
+    "@tailwindcss/vite": "4.2.1",
+    "@types/node": "22.16.5",
+    "@types/react": "19.2.0",
+    "@types/react-dom": "19.2.0",
+    "@vitejs/plugin-react": "5.2.0",
+    "electron": "41.2.1",
+    "electron-builder": "26.0.12",
+    "eslint": "9.32.0",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "globals": "15.15.0",
+    "prettier": "3.7.3",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.56.1",
+    "vite": "8.0.16"
+  },
+  "build": {
+    "appId": "com.masarray.inkwell",
+    "productName": "Inkwell",
+    "asar": true,
+    "compression": "maximum",
+    "npmRebuild": false,
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "dist",
+        "to": "app-dist",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "artifactName": "Inkwell-Setup-${version}-${arch}.${ext}",
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Inkwell",
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "Inkwell-Portable-${version}-${arch}.${ext}"
+    },
+    "fileAssociations": [
+      {
+        "ext": [
+          "md",
+          "markdown",
+          "mdx"
+        ],
+        "name": "Inkwell Markdown Document",
+        "description": "Markdown document",
+        "role": "Editor",
+        "mimeType": "text/markdown",
+        "icon": "icon.ico"
+      }
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "masarray",
+        "repo": "markdown-muse"
+      }
+    ],
+    "electronLanguages": [
+      "en-US",
+      "id"
+    ],
+    "executableName": "Inkwell"
+  },
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=10"
+  }
+}

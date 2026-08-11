@@ -1,0 +1,30 @@
+/* Final high-specificity corrections for GitHub/Primer light chrome. */
+
+:root {
+  --gh-danger-border: #cf222e;
+}
+
+.app-shell-github .app-titlebar-github {
+  background-color: #f6f8fa;
+  backdrop-filter: none;
+}
+
+.app-shell-github .format-toolbar-github,
+.app-shell-github .editor-footer-github {
+  background-color: #ffffff;
+  backdrop-filter: none;
+}
+
+.app-shell-github .theme-option,
+.app-shell-github .mode-button,
+.app-shell-github .btn-quiet,
+.app-shell-github .format-button,
+.app-shell-github .format-select,
+.app-shell-github .editor-footer-inner {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.gh-prose.markdown-body .github-alert-caution {
+  border-left-color: var(--gh-danger-border) !important;
+}

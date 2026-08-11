@@ -1,0 +1,298 @@
+/* Single-row workspace header: document tabs on the left, icon actions on the right. */
+:root {
+  --inkwell-header-height: 42px;
+}
+
+.titlebar-inner.titlebar-workspace-row {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  height: var(--inkwell-header-height);
+  margin: 0;
+  padding: 0 8px;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.document-tabs {
+  min-width: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+}
+
+.document-tabs-scroll {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 4px 0 0;
+  align-items: flex-end;
+  gap: 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.document-tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.document-tab {
+  position: relative;
+  display: flex;
+  min-width: 118px;
+  max-width: 220px;
+  height: 38px;
+  flex: 0 1 200px;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 5px 5px 0 0;
+  background: transparent;
+  color: var(--color-ink-muted);
+}
+
+.document-tab.is-active {
+  height: 39px;
+  margin-bottom: -1px;
+  z-index: 1;
+}
+
+.document-tab-main {
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 29px 0 10px;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.document-tab-main:focus-visible {
+  outline: 2px solid #0969da;
+  outline-offset: -2px;
+}
+
+.document-tab-main svg {
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+
+.document-tab-name {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.document-tab-dirty {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.document-tab-close {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  display: inline-grid;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  place-items: center;
+  translate: 0 -50%;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.document-tab-close svg {
+  width: 13px;
+  height: 13px;
+}
+
+.document-tab:hover .document-tab-close,
+.document-tab.is-active .document-tab-close,
+.document-tab:focus-within .document-tab-close {
+  opacity: 0.72;
+}
+
+.document-tab-close:hover,
+.document-tab-close:focus-visible {
+  background: color-mix(in oklab, currentColor 12%, transparent);
+  opacity: 1 !important;
+  outline: none;
+}
+
+.document-tabs-writer .document-tab.is-active {
+  border-color: var(--color-hairline);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.document-tabs-writer .document-tab:not(.is-active):hover {
+  background: color-mix(in oklab, var(--color-paper-shade) 60%, transparent);
+  color: var(--color-ink);
+}
+
+.document-tabs-github .document-tab,
+.document-tabs-github .document-tab-main {
+  color: #59636e;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial,
+    sans-serif;
+}
+
+.document-tabs-github .document-tab.is-active {
+  border-color: #d1d9e0;
+  background: #ffffff;
+  color: #1f2328;
+}
+
+.document-tabs-github .document-tab.is-active .document-tab-main {
+  color: #1f2328;
+}
+
+.document-tabs-github .document-tab:not(.is-active):hover,
+.document-tabs-github .document-tab:not(.is-active):hover .document-tab-main {
+  background: #d1d9e052;
+  color: #1f2328;
+}
+
+.titlebar-actions {
+  display: flex;
+  height: 100%;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 1px;
+}
+
+.app-titlebar .titlebar-actions .btn-quiet {
+  display: inline-grid;
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
+  place-items: center;
+  border-radius: 5px;
+}
+
+.app-titlebar .titlebar-actions .btn-quiet svg {
+  width: 14px;
+  height: 14px;
+}
+
+.app-titlebar .titlebar-actions .mode-button {
+  gap: 0;
+}
+
+.titlebar-separator {
+  width: 1px;
+  height: 16px;
+  margin: 0 5px;
+}
+
+.titlebar-separator-compact {
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+.theme-toggle.theme-toggle-icons {
+  display: flex;
+  width: 58px;
+  height: 28px;
+  padding: 1px;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.theme-toggle-icons .theme-option {
+  display: inline-grid;
+  width: 27px;
+  min-width: 27px;
+  height: 24px;
+  padding: 0;
+  place-items: center;
+  gap: 0;
+}
+
+.theme-toggle-icons .theme-option svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* The persistent formatter follows only the compact single-row header. */
+.format-toolbar {
+  top: var(--inkwell-header-height) !important;
+}
+
+/* Alert title must be a block sibling above the editable paragraph. */
+.app-shell-github .markdown-body blockquote.markdown-alert > .github-alert-decoration-title {
+  display: flex !important;
+  width: 100%;
+  margin: 0 0 10px !important;
+  align-items: center;
+  clear: both;
+}
+
+.app-shell-github .markdown-body blockquote.markdown-alert > .github-alert-marker-paragraph {
+  display: block;
+  width: 100%;
+  margin: 0 !important;
+}
+
+/* The heading widget contains GitHub's actual Octicon SVG/path. */
+.app-shell-github .markdown-body .anchor .octicon-link::before {
+  display: none !important;
+  content: none !important;
+}
+
+.app-shell-github .markdown-body .anchor svg.octicon-link {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  overflow: visible;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+@media (max-width: 760px) {
+  .titlebar-inner.titlebar-workspace-row {
+    padding-right: 4px;
+    padding-left: 4px;
+    gap: 4px;
+  }
+
+  .document-tab {
+    min-width: 96px;
+    max-width: 170px;
+  }
+
+  .document-tab-main {
+    padding-left: 8px;
+  }
+
+  .titlebar-separator {
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+}

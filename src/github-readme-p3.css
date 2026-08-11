@@ -1,0 +1,82 @@
+/* P3: GitHub README parity for HTML helpers, linked code, and badges. */
+
+/* Inline code inside a link keeps the GitHub link color and underline instead
+ * of reverting to the normal code foreground. */
+.app-shell-github .markdown-body a code,
+.app-shell-github .markdown-body a tt,
+.app-shell-github .markdown-body a code *,
+.app-shell-github .markdown-body a tt * {
+  color: inherit !important;
+  text-decoration: inherit;
+  text-decoration-thickness: inherit;
+  text-underline-offset: inherit;
+}
+
+/* GitHub README authors commonly use <p align="center"> for screenshots and
+ * compact navigation rows. The alignment attribute is intentionally retained. */
+.app-shell-github .markdown-body p[align="left"] {
+  text-align: left;
+}
+
+.app-shell-github .markdown-body p[align="center"] {
+  text-align: center;
+}
+
+.app-shell-github .markdown-body p[align="right"] {
+  text-align: right;
+}
+
+/* Markdown images are inline on GitHub. Keeping them inline is what lets action
+ * badges share one wrapping row instead of being extracted into stacked blocks. */
+.app-shell-github .markdown-body img {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.app-shell-github .markdown-body a > img {
+  vertical-align: middle;
+}
+
+.app-shell-github .markdown-body a:has(> img) {
+  text-decoration: none;
+}
+
+.app-shell-github .markdown-body p:has(> a > img),
+.app-shell-github .markdown-body p:has(> img) {
+  line-height: 1.5;
+}
+
+.app-shell-github .markdown-body img[align="left"] {
+  float: left;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.app-shell-github .markdown-body img[align="right"] {
+  float: right;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+}
+
+/* Raw HTML screenshots inside tables must remain constrained to their cells. */
+.app-shell-github .markdown-body td img,
+.app-shell-github .markdown-body th img {
+  max-width: 100%;
+}
+
+/* Writer keeps its editorial identity, but HTML alignment still needs to work
+ * so switching themes never changes the document structure. */
+.app-shell-writer .ink-prose p[align="left"] {
+  text-align: left;
+}
+
+.app-shell-writer .ink-prose p[align="center"] {
+  text-align: center;
+}
+
+.app-shell-writer .ink-prose p[align="right"] {
+  text-align: right;
+}

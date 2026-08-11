@@ -1,0 +1,357 @@
+/*
+ * Screenshot-parity bridge for GitHub mode.
+ *
+ * The generated GitHub Markdown CSS assumes GitHub's rendered HTML. TipTap uses
+ * editable paragraphs inside list items, keeps every table row in one tbody,
+ * and does not create alert/permalink UI. These rules normalize those structural
+ * differences without changing the Markdown document.
+ */
+
+.app-shell-github .editor-main {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 980px !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.app-shell-github .markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px 45px 96px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #1f2328;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  -webkit-text-size-adjust: 100%;
+}
+
+.app-shell-github .markdown-body a {
+  color: #0969da;
+  text-decoration: underline;
+  text-decoration-thickness: auto;
+  text-underline-offset: 0.2rem;
+}
+
+.app-shell-github .markdown-body h1,
+.app-shell-github .markdown-body h2,
+.app-shell-github .markdown-body h3,
+.app-shell-github .markdown-body h4,
+.app-shell-github .markdown-body h5,
+.app-shell-github .markdown-body h6 {
+  position: relative;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1f2328;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.app-shell-github .markdown-body h1 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #d1d9e0b3;
+  font-size: 2em;
+}
+
+.app-shell-github .markdown-body h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #d1d9e0b3;
+  font-size: 1.5em;
+}
+
+.app-shell-github .markdown-body h3 { font-size: 1.25em; }
+.app-shell-github .markdown-body h4 { font-size: 1em; }
+.app-shell-github .markdown-body h5 { font-size: 0.875em; }
+.app-shell-github .markdown-body h6 { color: #59636e; font-size: 0.85em; }
+
+.app-shell-github .markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.app-shell-github .markdown-body p,
+.app-shell-github .markdown-body blockquote,
+.app-shell-github .markdown-body ul,
+.app-shell-github .markdown-body ol,
+.app-shell-github .markdown-body dl,
+.app-shell-github .markdown-body table,
+.app-shell-github .markdown-body pre,
+.app-shell-github .markdown-body details,
+.app-shell-github .markdown-body .code-block-shell {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* TipTap always wraps list text in p; GitHub's tight GFM list does not. */
+.app-shell-github .ProseMirror.markdown-body li > p {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.app-shell-github .ProseMirror.markdown-body li + li {
+  margin-top: 0.25em;
+}
+
+.app-shell-github .ProseMirror.markdown-body ul,
+.app-shell-github .ProseMirror.markdown-body ol {
+  padding-left: 2em;
+}
+
+/* TipTap puts the header and body rows in the same tbody. GitHub's renderer
+ * uses a separate thead, so zebra striping starts on the second data row. */
+.app-shell-github .markdown-body table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+  font-variant: tabular-nums;
+}
+
+.app-shell-github .markdown-body table th,
+.app-shell-github .markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #d1d9e0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.app-shell-github .markdown-body table th {
+  background: inherit;
+  font-weight: 600;
+}
+
+.app-shell-github .markdown-body table p {
+  margin: 0;
+}
+
+.app-shell-github .markdown-body table tbody:has(> tr:first-child th) > tr {
+  background-color: #ffffff;
+}
+
+.app-shell-github .markdown-body table tbody:has(> tr:first-child th) > tr:nth-child(2n + 3) {
+  background-color: #f6f8fa;
+}
+
+/* GitHub heading permalink widget. It is a ProseMirror decoration and therefore
+ * never enters the Markdown serialization. */
+.app-shell-github .markdown-body .anchor.github-heading-anchor {
+  float: left;
+  padding-right: 0.25rem;
+  margin-left: -20px;
+  color: #1f2328;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.app-shell-github .markdown-body .anchor.github-heading-anchor:focus {
+  outline: none;
+}
+
+.app-shell-github .markdown-body .anchor .octicon-link {
+  color: #1f2328;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.app-shell-github .markdown-body .github-heading-with-anchor:hover .anchor .octicon-link,
+.app-shell-github .markdown-body .github-heading-with-anchor:focus-within .anchor .octicon-link,
+.app-shell-github .markdown-body .anchor:focus-visible .octicon-link {
+  visibility: visible;
+}
+
+.app-shell-github .markdown-body .anchor .octicon-link::before {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  content: "";
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.775 3.275a.75.75 0 0 1 1.06 1.06l-1.25 1.25a2 2 0 0 0 0 2.83.75.75 0 0 1-1.06 1.06 3.5 3.5 0 0 1 0-4.95l1.25-1.25Zm2.31-.19a2 2 0 1 1 2.83 2.83l-2.5 2.5a2 2 0 0 1-2.83 0 .75.75 0 0 0-1.06 1.06 3.5 3.5 0 0 0 4.95 0l2.5-2.5a3.5 3.5 0 0 0-4.95-4.95l-1.25 1.25a.75.75 0 0 0 1.06 1.06l1.25-1.25Zm-7 7a2 2 0 0 0 0 2.83 2 2 0 0 0 2.83 0l1.25-1.25a.75.75 0 0 1 1.06 1.06l-1.25 1.25a3.5 3.5 0 0 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .75.75 0 0 1-1.06 1.06 2 2 0 0 0-2.83 0l-2.5 2.5Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.775 3.275a.75.75 0 0 1 1.06 1.06l-1.25 1.25a2 2 0 0 0 0 2.83.75.75 0 0 1-1.06 1.06 3.5 3.5 0 0 1 0-4.95l1.25-1.25Zm2.31-.19a2 2 0 1 1 2.83 2.83l-2.5 2.5a2 2 0 0 1-2.83 0 .75.75 0 0 0-1.06 1.06 3.5 3.5 0 0 0 4.95 0l2.5-2.5a3.5 3.5 0 0 0-4.95-4.95l-1.25 1.25a.75.75 0 0 0 1.06 1.06l1.25-1.25Zm-7 7a2 2 0 0 0 0 2.83 2 2 0 0 0 2.83 0l1.25-1.25a.75.75 0 0 1 1.06 1.06l-1.25 1.25a3.5 3.5 0 0 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .75.75 0 0 1-1.06 1.06 2 2 0 0 0-2.83 0l-2.5 2.5Z'/%3E%3C/svg%3E");
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 16px 16px;
+  mask-size: 16px 16px;
+}
+
+/* GitHub alert bridge. The literal [!TYPE] remains in ProseMirror and in the
+ * saved Markdown, but an inline decoration hides it and supplies GitHub's title. */
+.app-shell-github .markdown-body blockquote.markdown-alert {
+  padding: 0.5rem 1rem !important;
+  margin: 0 0 1rem !important;
+  border-left: 0.25em solid #d1d9e0 !important;
+  color: #1f2328 !important;
+  font-style: normal !important;
+}
+
+.app-shell-github .markdown-body blockquote.markdown-alert-note { border-left-color: #0969da !important; }
+.app-shell-github .markdown-body blockquote.markdown-alert-tip { border-left-color: #1a7f37 !important; }
+.app-shell-github .markdown-body blockquote.markdown-alert-important { border-left-color: #8250df !important; }
+.app-shell-github .markdown-body blockquote.markdown-alert-warning { border-left-color: #9a6700 !important; }
+.app-shell-github .markdown-body blockquote.markdown-alert-caution { border-left-color: #cf222e !important; }
+
+.app-shell-github .markdown-body .github-alert-marker-paragraph {
+  margin: 0 !important;
+  color: #1f2328 !important;
+  font-size: inherit !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+.app-shell-github .markdown-body .github-alert-marker-hidden {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+}
+
+.app-shell-github .markdown-body .github-alert-decoration-title {
+  display: flex;
+  margin: 0 0 10px;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.app-shell-github .markdown-body .github-alert-decoration-title::before {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  background-color: currentColor;
+  content: "";
+  -webkit-mask-image: var(--gh-alert-icon);
+  mask-image: var(--gh-alert-icon);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 16px 16px;
+  mask-size: 16px 16px;
+}
+
+.app-shell-github .markdown-body .markdown-alert-note .github-alert-decoration-title { color: #0969da; }
+.app-shell-github .markdown-body .markdown-alert-tip .github-alert-decoration-title { color: #1a7f37; }
+.app-shell-github .markdown-body .markdown-alert-important .github-alert-decoration-title { color: #8250df; }
+.app-shell-github .markdown-body .markdown-alert-warning .github-alert-decoration-title { color: #9a6700; }
+.app-shell-github .markdown-body .markdown-alert-caution .github-alert-decoration-title { color: #d1242f; }
+
+/* Disable the older pseudo-element alert renderer so it cannot duplicate the
+ * decoration title or hide same-paragraph alert content. */
+.app-shell-github .markdown-body .github-alert > p:first-child::before,
+.app-shell-github .markdown-body .github-alert > p:first-child::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* The supplied GitHub captures use the repository preview's square code panel
+ * and its always-visible, icon-only clipboard control. */
+.app-shell-github .markdown-body .code-block-shell {
+  position: relative;
+  min-height: 52px;
+}
+
+.app-shell-github .markdown-body .code-block-shell pre {
+  min-height: 52px;
+  margin: 0;
+  padding: 1rem 3rem 1rem 1rem !important;
+  overflow: auto;
+  border: 0;
+  border-radius: 0 !important;
+  background-color: #f6f8fa !important;
+  color: #1f2328;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  font-size: 85%;
+  line-height: 1.45;
+  word-wrap: normal;
+}
+
+.app-shell-github .markdown-body .code-copy-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  place-items: center;
+  border: 0 !important;
+  border-radius: 6px;
+  background: transparent !important;
+  color: #59636e;
+  box-shadow: none !important;
+  cursor: pointer;
+  opacity: 1 !important;
+}
+
+.app-shell-github .markdown-body .code-copy-button:hover,
+.app-shell-github .markdown-body .code-copy-button:focus-visible {
+  background: #d1d9e052 !important;
+  color: #1f2328;
+}
+
+.app-shell-github .markdown-body .code-copy-button.is-copied {
+  color: #1a7f37;
+}
+
+.app-shell-github .markdown-body .code-copy-button svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* Lowlight token colors mapped to GitHub's current light palette. The token
+ * grammar is still Lowlight; these rules remove the non-GitHub orange theme. */
+.app-shell-github .markdown-body .hljs-comment,
+.app-shell-github .markdown-body .hljs-quote { color: #59636e; font-style: normal; }
+.app-shell-github .markdown-body .hljs-keyword,
+.app-shell-github .markdown-body .hljs-selector-tag,
+.app-shell-github .markdown-body .hljs-subst { color: #cf222e; }
+.app-shell-github .markdown-body .hljs-number,
+.app-shell-github .markdown-body .hljs-literal,
+.app-shell-github .markdown-body .hljs-variable,
+.app-shell-github .markdown-body .hljs-template-variable,
+.app-shell-github .markdown-body .hljs-attr { color: #0550ae; }
+.app-shell-github .markdown-body .hljs-string,
+.app-shell-github .markdown-body .hljs-doctag,
+.app-shell-github .markdown-body .hljs-regexp { color: #0a3069; }
+.app-shell-github .markdown-body .hljs-title,
+.app-shell-github .markdown-body .hljs-section,
+.app-shell-github .markdown-body .hljs-selector-id { color: #6639ba; }
+.app-shell-github .markdown-body .hljs-built_in,
+.app-shell-github .markdown-body .hljs-builtin-name,
+.app-shell-github .markdown-body .hljs-name { color: #1f2328; }
+.app-shell-github .markdown-body .hljs-link { color: #0969da; text-decoration: underline; }
+.app-shell-github .markdown-body .hljs-symbol,
+.app-shell-github .markdown-body .hljs-bullet,
+.app-shell-github .markdown-body .hljs-meta { color: #953800; }
+
+@media (max-width: 767px) {
+  .app-shell-github .markdown-body {
+    padding: 15px 15px 80px !important;
+  }
+}

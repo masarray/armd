@@ -1,0 +1,337 @@
+/* P4: one lightweight, responsive application chrome for every render theme. */
+:root {
+  --app-chrome-bg: #f6f8fa;
+  --app-chrome-surface: #ffffff;
+  --app-chrome-border: #d1d9e0;
+  --app-chrome-text: #1f2328;
+  --app-chrome-muted: #59636e;
+  --app-chrome-hover: #eaeef2;
+  --app-chrome-active: #ddf4ff;
+  --app-chrome-accent: #0969da;
+  --app-chrome-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Theme changes the document, not the workspace controls. */
+.app-titlebar,
+.app-titlebar-writer,
+.app-titlebar-github {
+  border-color: var(--app-chrome-border) !important;
+  background: var(--app-chrome-bg) !important;
+  color: var(--app-chrome-text) !important;
+  font-family: var(--app-chrome-font);
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+.titlebar-inner.titlebar-workspace-row {
+  background: transparent;
+}
+
+.document-tabs-writer .document-tab,
+.document-tabs-writer .document-tab-main,
+.document-tabs-github .document-tab,
+.document-tabs-github .document-tab-main {
+  color: var(--app-chrome-muted);
+  font-family: var(--app-chrome-font);
+}
+
+.document-tabs-writer .document-tab.is-active,
+.document-tabs-github .document-tab.is-active {
+  border-color: var(--app-chrome-border);
+  background: var(--app-chrome-surface);
+  color: var(--app-chrome-text);
+}
+
+.document-tabs-writer .document-tab.is-active .document-tab-main,
+.document-tabs-github .document-tab.is-active .document-tab-main {
+  color: var(--app-chrome-text);
+}
+
+.document-tabs-writer .document-tab:not(.is-active):hover,
+.document-tabs-writer .document-tab:not(.is-active):hover .document-tab-main,
+.document-tabs-github .document-tab:not(.is-active):hover,
+.document-tabs-github .document-tab:not(.is-active):hover .document-tab-main {
+  background: var(--app-chrome-hover);
+  color: var(--app-chrome-text);
+}
+
+.app-titlebar .titlebar-actions .btn-quiet,
+.app-shell-writer .app-titlebar .btn-quiet,
+.app-shell-github .app-titlebar .btn-quiet {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--app-chrome-muted);
+}
+
+.app-titlebar .titlebar-actions .btn-quiet:hover,
+.app-titlebar .titlebar-actions .btn-quiet:focus-visible,
+.app-titlebar .titlebar-actions .btn-quiet.is-emphasized {
+  border-color: var(--app-chrome-border);
+  background: var(--app-chrome-hover);
+  color: var(--app-chrome-text);
+  outline: none;
+}
+
+.titlebar-separator,
+.app-titlebar-github .titlebar-separator,
+.app-titlebar-writer .titlebar-separator {
+  background: var(--app-chrome-border);
+}
+
+.theme-toggle,
+.app-titlebar-writer .theme-toggle,
+.app-titlebar-github .theme-toggle {
+  border-color: var(--app-chrome-border) !important;
+  background: var(--app-chrome-hover) !important;
+}
+
+.theme-option,
+.app-titlebar-writer .theme-option,
+.app-titlebar-github .theme-option {
+  color: var(--app-chrome-muted) !important;
+  font-family: var(--app-chrome-font);
+}
+
+.theme-option:hover,
+.app-titlebar-writer .theme-option:hover,
+.app-titlebar-github .theme-option:hover {
+  color: var(--app-chrome-text) !important;
+}
+
+.theme-option.is-active,
+.app-titlebar-writer .theme-option.is-active,
+.app-titlebar-github .theme-option.is-active {
+  background: var(--app-chrome-surface) !important;
+  color: var(--app-chrome-text) !important;
+  box-shadow: 0 1px 2px rgba(31, 35, 40, 0.08);
+}
+
+/* Full-width toolbar surface with a centered control rail. The rail remains
+ * left-scrollable only when it is wider than the viewport. */
+.format-toolbar,
+.format-toolbar-compact,
+.format-toolbar-compact.format-toolbar-writer,
+.format-toolbar-compact.format-toolbar-github {
+  width: 100vw;
+  min-height: var(--inkwell-formatbar-height, 34px) !important;
+  height: var(--inkwell-formatbar-height, 34px);
+  margin: 0 0 0 calc(50% - 50vw) !important;
+  padding: 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 0 !important;
+  border-bottom: 1px solid var(--app-chrome-border) !important;
+  border-radius: 0 !important;
+  background: var(--app-chrome-surface) !important;
+  color: var(--app-chrome-text);
+  font-family: var(--app-chrome-font);
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.format-toolbar-inner {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 3px 8px;
+  align-items: center;
+  justify-content: safe center;
+  gap: 1px;
+}
+
+.format-toolbar-writer .format-button,
+.format-toolbar-github .format-button,
+.format-toolbar-writer .format-select,
+.format-toolbar-github .format-select {
+  color: var(--app-chrome-muted);
+  font-family: var(--app-chrome-font);
+}
+
+.format-toolbar-writer .format-button:hover:not(:disabled),
+.format-toolbar-github .format-button:hover:not(:disabled),
+.format-toolbar-writer .format-select:hover,
+.format-toolbar-writer .format-select:focus,
+.format-toolbar-github .format-select:hover,
+.format-toolbar-github .format-select:focus {
+  border-color: var(--app-chrome-border);
+  background: var(--app-chrome-hover);
+  color: var(--app-chrome-text);
+}
+
+.format-toolbar-writer .format-button.is-active,
+.format-toolbar-github .format-button.is-active {
+  border-color: var(--app-chrome-accent);
+  background: var(--app-chrome-active);
+  color: var(--app-chrome-accent);
+}
+
+.format-toolbar-writer .format-separator,
+.format-toolbar-github .format-separator {
+  background: var(--app-chrome-border);
+}
+
+.format-toolbar-compact .format-block-select {
+  width: 112px;
+  padding-right: 20px;
+  padding-left: 8px;
+}
+
+.format-toolbar-compact .format-alert-select {
+  width: 64px;
+}
+
+/* The status line is also application chrome, so switching document theme no
+ * longer causes a distracting surface change at the bottom of the window. */
+.editor-footer-writer,
+.editor-footer-github {
+  border-top: 1px solid var(--app-chrome-border);
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: none !important;
+}
+
+.editor-footer-writer .editor-footer-inner,
+.editor-footer-github .editor-footer-inner {
+  color: var(--app-chrome-muted);
+  font-family: var(--app-chrome-font);
+}
+
+/* Responsive workspace: tabs keep the flexible area, actions remain usable,
+ * and both rails use native horizontal scrolling instead of wrapping. */
+.titlebar-actions {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.titlebar-actions::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .titlebar-inner.titlebar-workspace-row {
+    padding-right: 5px;
+    padding-left: 5px;
+    gap: 4px;
+  }
+
+  .document-tab {
+    min-width: 92px;
+    max-width: 160px;
+    flex-basis: 142px;
+  }
+
+  .document-tab-main {
+    padding-right: 27px;
+    padding-left: 8px;
+    gap: 5px;
+  }
+
+  .titlebar-separator {
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+  .format-toolbar-inner {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .format-toolbar-compact .format-block-select {
+    width: 104px;
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --inkwell-header-height: 40px;
+  }
+
+  .titlebar-inner.titlebar-workspace-row {
+    padding-right: 3px;
+    padding-left: 3px;
+    gap: 2px;
+  }
+
+  .document-tab {
+    min-width: 76px;
+    max-width: 128px;
+    height: 36px;
+    flex-basis: 112px;
+  }
+
+  .document-tab.is-active {
+    height: 37px;
+  }
+
+  .document-tab-main {
+    padding-right: 25px;
+    padding-left: 7px;
+    font-size: 11px;
+  }
+
+  .app-titlebar .titlebar-actions .btn-quiet {
+    width: 27px;
+    min-width: 27px;
+    height: 27px;
+  }
+
+  .theme-toggle.theme-toggle-icons {
+    width: 54px;
+  }
+
+  .theme-toggle-icons .theme-option {
+    width: 25px;
+    min-width: 25px;
+  }
+
+  .titlebar-separator {
+    display: none;
+  }
+
+  .format-toolbar-inner {
+    justify-content: safe center;
+  }
+
+  .format-toolbar-compact .format-block-select {
+    width: 98px;
+  }
+
+  .editor-footer-inner {
+    padding-right: 8px !important;
+    padding-left: 8px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .document-tab-main svg {
+    display: none;
+  }
+
+  .document-tab-main {
+    gap: 0;
+  }
+
+  .format-toolbar-compact .format-block-select {
+    width: 94px;
+  }
+}
+
+@media (hover: none) {
+  .document-tab-close {
+    opacity: 0.72;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell,
+  .document-tab,
+  .format-button,
+  .theme-option {
+    transition: none !important;
+  }
+}
