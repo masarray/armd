@@ -1,0 +1,56 @@
+appId: com.masarray.armd
+productName: ARMD
+copyright: Copyright © 2026 masarray
+
+asar: true
+compression: maximum
+
+directories:
+  output: release
+
+files:
+  - dist/**/*
+  - electron/**/*
+  - package.json
+
+extraMetadata:
+  main: electron/main.mjs
+
+win:
+  icon: build/icon.ico
+  target:
+    - target: dir
+      arch:
+        - x64
+
+linux:
+  executableName: armd
+  icon: build/icons
+  category: Utility
+  synopsis: Lightweight Markdown editor and GitHub-style viewer
+  description: ARMD is a lightweight Markdown editor and viewer with GitHub-style rendering.
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+  desktop:
+    entry:
+      Name: ARMD
+      Comment: Edit and view Markdown documents
+      Categories: Utility;TextEditor;
+      MimeType: text/markdown;text/x-markdown;
+
+fileAssociations:
+  - ext: md
+    name: Markdown Document
+    description: Markdown document
+    role: Editor
+    mimeType: text/markdown
+
+publish:
+  provider: github
+  owner: masarray
+  repo: armd
