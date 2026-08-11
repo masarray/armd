@@ -1,0 +1,206 @@
+name: Cross-platform release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+  pull_request:
+    paths:
+      - ".github/workflows/release-cross-platform.yml"
+      - "build/**"
+      - "electron/**"
+      - "installer/**"
+      - "public/**"
+      - "scripts/**"
+      - "src/**"
+      - "index.html"
+      - "package.json"
+      - "package-lock.json"
+      - "electron-builder.cross.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: armd-release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    name: Windows x64 · Inno Setup
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install application dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Set release version from tag
+        if: github.ref_type == 'tag'
+        shell: pwsh
+        run: |
+          $version = "${{ github.ref_name }}".TrimStart("v")
+          npm version $version --no-git-tag-version --allow-same-version
+
+      - name: Install release asset tools
+        run: npm install --no-save --no-package-lock sharp@0.34.3 png-to-ico@2.1.8
+
+      - name: Generate application icons and favicon
+        run: node scripts/generate-release-icons.mjs
+
+      - name: Build renderer
+        run: npm run build
+
+      - name: Build Windows application directory
+        shell: pwsh
+        run: npx electron-builder --config electron-builder.cross.yml --win dir --x64 --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+      - name: Locate Inno Setup compiler
+        shell: pwsh
+        run: |
+          $candidates = @(
+            "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe",
+            "${env:ProgramFiles}\Inno Setup 6\ISCC.exe"
+          )
+          $iscc = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $iscc) {
+            choco install innosetup --yes --no-progress
+            $iscc = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+          }
+          if (-not $iscc) { throw "Inno Setup 6 compiler was not found." }
+          "ISCC=$iscc" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Host "Using $iscc"
+
+      - name: Compile smart Inno Setup installer
+        shell: pwsh
+        run: |
+          $version = node -p "require('./package.json').version"
+          & "$env:ISCC" "/DMyAppVersion=$version" "installer\windows\armd.iss"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Generate Windows checksum
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem "release\ARMD-Setup-*.exe"
+          if (-not $files) { throw "ARMD installer was not produced." }
+          $lines = foreach ($file in $files) {
+            $hash = (Get-FileHash $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            "$hash  $($file.Name)"
+          }
+          $lines | Set-Content "release\SHA256SUMS-Windows.txt" -Encoding ascii
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ARMD-Windows-x64
+          path: |
+            release/ARMD-Setup-*.exe
+            release/SHA256SUMS-Windows.txt
+          if-no-files-found: error
+          retention-days: 30
+
+  linux:
+    name: Linux x64 · AppImage + DEB
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install application dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Set release version from tag
+        if: github.ref_type == 'tag'
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          npm version "$version" --no-git-tag-version --allow-same-version
+
+      - name: Install release asset tools
+        run: npm install --no-save --no-package-lock sharp@0.34.3 png-to-ico@2.1.8
+
+      - name: Generate application icons and favicon
+        run: node scripts/generate-release-icons.mjs
+
+      - name: Build renderer
+        run: npm run build
+
+      - name: Build AppImage and Debian package
+        run: npx electron-builder --config electron-builder.cross.yml --linux AppImage deb --x64 --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+      - name: Normalize Linux artifact names and checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+
+          appimage="$(find release -maxdepth 1 -type f -name '*.AppImage' -print -quit)"
+          deb="$(find release -maxdepth 1 -type f -name '*.deb' -print -quit)"
+          test -n "$appimage"
+          test -n "$deb"
+
+          mv "$appimage" "release/ARMD-${version}-x86_64.AppImage"
+          mv "$deb" "release/ARMD-${version}-amd64.deb"
+          chmod +x "release/ARMD-${version}-x86_64.AppImage"
+
+          cd release
+          sha256sum "ARMD-${version}-x86_64.AppImage" "ARMD-${version}-amd64.deb" > SHA256SUMS-Linux.txt
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ARMD-Linux-x64
+          path: |
+            release/ARMD-*-x86_64.AppImage
+            release/ARMD-*-amd64.deb
+            release/SHA256SUMS-Linux.txt
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    name: Publish GitHub Release
+    if: github.ref_type == 'tag'
+    needs:
+      - windows
+      - linux
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Publish release assets
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          if ! gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$tag" --repo "$GITHUB_REPOSITORY" --title "ARMD $tag" --generate-notes --verify-tag
+          fi
+
+          while IFS= read -r -d '' file; do
+            gh release upload "$tag" "$file" --repo "$GITHUB_REPOSITORY" --clobber
+          done < <(find artifacts -type f \( -name '*.exe' -o -name '*.AppImage' -o -name '*.deb' -o -name 'SHA256SUMS-*.txt' \) -print0)
